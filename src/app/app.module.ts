@@ -6,11 +6,13 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 import { ReposListComponent } from './components/repos-list/repos-list.component';
+import { RepoDetailsComponent } from './components/repo-details/repo-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ReposListComponent
+    ReposListComponent,
+    RepoDetailsComponent
   ],
   imports: [
     BrowserModule,
