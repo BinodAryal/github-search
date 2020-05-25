@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataShareService } from 'src/app/services/data-share.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-repo-details',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RepoDetailsComponent implements OnInit {
 
-  constructor() { }
+  repoDetails$:Observable<any>;
+  router: any;
+
+  constructor(
+    private dataService:DataShareService
+  ) { }
 
   ngOnInit(): void {
+    this.repoDetails$ = this.dataService.repoItemDetail;
+  }
+
+  onBack(): void {
+    this.router.navigate(['/repos']);
   }
 
 }

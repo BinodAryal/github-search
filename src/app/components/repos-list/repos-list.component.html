@@ -1,35 +1,37 @@
 <div class="container-fluid bg-light">
   <div class="container">
-      <!-- form>
-          <div class="form-group">
-              <label>SEARCH BY:</label>
-              <input type="text" name="search" [(ngModel)]='repoName'  (keyup)="findRepo()">
-          </div>
-      </form> -->
-      <form>
-        <div class="form-group" class="container center_div">
+    <div class="form-group" class="container center_div">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Type Name of the Repo"
+        [formControl]="searchTerm"
+      />
+    </div>
 
-          <input type="text" class="form-control"  placeholder="Type Name of the Repo" name="search" [(ngModel)]='repoName'  (keyup)="findRepo()">
+    <div *ngIf="searchTerm$ | async as repoItems">
 
+      <h3 *ngIf="searching">Searching ....</h3>
+      <h3 *ngIf="showErrorMessage">No Items Found</h3>
+
+      <div class="card" *ngFor="let item of repoItems.items" (click)="openItemDetails(item)">
+        <h3 *ngIf="repoItems.items.length == 0 ">No Results Found</h3>
+        <div class="card-body">
+          <a href="{{ item.html_url }}" target="_blank"><strong>{{ item.name }}</strong></a>
+          <p>{{ item.description }}</p>
+          <p><strong>Author:&nbsp;</strong>{{ item.owner.login }}</p>
+          <p><i class="fa fa-star fa-lg" aria-hidden="true">&nbsp;</i>{{ item.stargazers_count }}</p>
+          <p><i class="fa fa-code-fork fa-lg" aria-hidden="true">&nbsp;</i>{{ item.forks_count }}</p>
+          <p><strong><i class="fa fa-eye" aria-hidden="true">&nbsp;</i></strong>{{ item.watchers_count }}</p>
+          <p><strong>Last Updated:&nbsp;</strong> {{ item.updated_at | date }}</p>
         </div>
-      </form>
-
-      <div *ngIf="repoitems" >
-          <div class="card" *ngFor='let item of repoitems'>
-              <div class="card-body" >
-                  <a href="{{item.html_url}}" target="_blank"><strong>{{item.name}}</strong></a>
-                  <p>{{item.description}}</p>
-                  <p><strong>Author:&nbsp;</strong>{{item.owner.login}}</p>
-                  <p><i class="fa fa-star fa-lg" aria-hidden="true">&nbsp;</i>{{item.stargazers_count}}</p>
-                  <p><i class="fa fa-code-fork fa-lg" aria-hidden="true">&nbsp;</i>{{item.forks_count}}</p>
-                  <p><strong><i class="fa fa-eye" aria-hidden="true">&nbsp;</i></strong>{{item.watchers_count}}</p>
-                  <p><strong>Last Updated:&nbsp;</strong> {{item.updated_at  | date}}</p>
-
-              </div>
-          </div>
-
       </div>
 
+      <div style="display: flex;">
+        <button>Prev</button>
+      <button (click)="nextItems()">Next</button>
+      </div>
+
+    </div>
   </div>
 </div>
-
