@@ -34,7 +34,7 @@ export class ReposListComponent  {
       this.currentSearchedTerm = termValue;
       return this.repoService.searchRepoDetails(termValue, this.pageCount).pipe(
         tap((res)=> {
-          console.log('api ko reposnse', res);
+          //console.log('api reposnse', res);
           this.searching = false;
           this.showErrorMessage = false;
         }),
@@ -54,13 +54,30 @@ export class ReposListComponent  {
     private dataShareService:DataShareService
     ) {
   }
+  prevItems(){
+    this.pageCount = this.pageCount - 1;
+
+    this.searchTerm$ = this.repoService.searchRepoDetails(this.currentSearchedTerm, this.pageCount).pipe(
+      tap((res)=> {
+        //console.log('API response', res);
+        this.searching = false;
+        this.showErrorMessage = false;
+      }),
+      catchError((err) => {
+        console.log("error occurred during search ", err);
+        this.showErrorMessage = true;
+        this.searching = false;
+        return [];
+      })
+    )
+  }
 
   nextItems() {
     this.pageCount = this.pageCount + 1;
 
     this.searchTerm$ = this.repoService.searchRepoDetails(this.currentSearchedTerm, this.pageCount).pipe(
       tap((res)=> {
-        console.log('api ko reposnse', res);
+        //console.log('API response', res);
         this.searching = false;
         this.showErrorMessage = false;
       }),

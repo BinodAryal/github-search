@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class RepoDetailsComponent implements OnInit {
 
+
+  pageTitle: string = 'Repo Detail';
   repoDetails$:Observable<any>;
   router: any;
 
