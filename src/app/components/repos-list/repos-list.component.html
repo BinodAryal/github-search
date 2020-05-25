@@ -17,19 +17,34 @@
       <div class="card" *ngFor="let item of repoItems.items" (click)="openItemDetails(item)">
         <h3 *ngIf="repoItems.items.length == 0 ">No Results Found</h3>
         <div class="card-body">
-          <a href="{{ item.html_url }}" target="_blank"><strong>{{ item.name }}</strong></a>
+          <p><strong>{{ item.name }}</strong></p>
           <p>{{ item.description }}</p>
           <p><strong>Author:&nbsp;</strong>{{ item.owner.login }}</p>
-          <p><i class="fa fa-star fa-lg" aria-hidden="true">&nbsp;</i>{{ item.stargazers_count }}</p>
-          <p><i class="fa fa-code-fork fa-lg" aria-hidden="true">&nbsp;</i>{{ item.forks_count }}</p>
-          <p><strong><i class="fa fa-eye" aria-hidden="true">&nbsp;</i></strong>{{ item.watchers_count }}</p>
-          <p><strong>Last Updated:&nbsp;</strong> {{ item.updated_at | date }}</p>
+          <div class="row text-center">
+          <div class="col-3">
+          <strong>Last Updated:&nbsp;</strong> {{ item.updated_at | date }}
+          </div>
+          <div class="col-3">
+          <i class="fa fa-star fa-lg" aria-hidden="true">&nbsp;</i>{{ item.stargazers_count }}
+          </div>
+          <div class="col-3">
+          <i class="fa fa-code-fork fa-lg" aria-hidden="true">&nbsp;</i>{{ item.forks_count }}
+          </div>
+          <div class="col-3">
+          <i class="fa fa-eye" aria-hidden="true">&nbsp;</i>{{ item.watchers_count }}
+        </div>
+        </div>
+
         </div>
       </div>
 
-      <div style="display: flex;">
-      <button (click)="prevItems()">Prev</button>
-      <button (click)="nextItems()">Next</button>
+      <div class='card-footer'>
+      <button class='btn btn-outline-secondary'
+
+      (click)="prevItems()">Prev</button>
+      <button class='btn btn-outline-secondary'
+      (click)="nextItems()">Next</button>
+
       </div>
 
     </div>
