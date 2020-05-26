@@ -24,10 +24,13 @@ export class ReposListComponent  {
 
   searchTerm$: Observable<any> = this.searchTerm.valueChanges.pipe(
     tap(() => {
+      //handling side effect
       this.searching = true;
      this.showErrorMessage = false;
     }),
+    //for waiting completion of word
     debounceTime(1000),
+    //search input change
     distinctUntilChanged(),
     //to cancel the previous typed value and get the latest typed item
     switchMap((termValue) => {
@@ -55,21 +58,28 @@ export class ReposListComponent  {
     ) {
   }
   prevItems(){
+    if (this.pageCount>1){
     this.pageCount = this.pageCount - 1;
 
     this.searchTerm$ = this.repoService.searchRepoDetails(this.currentSearchedTerm, this.pageCount).pipe(
       tap((res)=> {
+        //handling side effect
         //console.log('API response', res);
         this.searching = false;
         this.showErrorMessage = false;
       }),
       catchError((err) => {
+        //handlingerror during search
         console.log("error occurred during search ", err);
         this.showErrorMessage = true;
         this.searching = false;
         return [];
       })
     )
+    }
+    else{
+      console.log('No data');
+    }
   }
 
   nextItems() {
